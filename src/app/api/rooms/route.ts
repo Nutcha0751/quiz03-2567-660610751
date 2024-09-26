@@ -4,24 +4,25 @@ import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
-  readDB();
+  const DB = readDB();
   return NextResponse.json({
     ok: true,
-    //rooms:(<Database>DB).rooms,
-    //totalRooms:
+    //rooms: DB.rooms,
+    //totalRooms: DB.rooms.length
   });
 };
 
 export const POST = async (request: NextRequest) => {
   const payload = checkToken();
-
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: "Invalid token",
-  //   },
-  //   { status: 401 }
-  // );
+  if (!payload){
+    return NextResponse.json(
+      {
+        ok: false,
+        message: "Invalid token",
+      },
+      { status: 401 }
+    );
+  }
 
   readDB();
 
