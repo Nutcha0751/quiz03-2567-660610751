@@ -28,17 +28,27 @@ export const GET = async (request: NextRequest) => {
 
 
 export const POST = async (request: NextRequest) => {
+  const body = await request.json();
+  const data = (<Database>DB);
+  //const room = data.rooms.find((r) => r.roomId === roomId);
   readDB();
 
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room is not found`,
-  //   },
-  //   { status: 404 }
-  // );
+  /*if(!room){
+    return NextResponse.json(
+      {
+        ok: false,
+        message: `Room is not found`,
+      },
+      { status: 404 }
+    );
+  }*/
 
-  const messageId = nanoid();
+  /*const messageId = nanoid();
+  data.messages.push({
+    roomId,
+    messageId,
+    messageText: body.messageText,
+  });*/
 
   writeDB();
 
