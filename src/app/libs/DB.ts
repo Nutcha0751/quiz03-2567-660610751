@@ -1,3 +1,4 @@
+import exp from "constants";
 import _ from "lodash";
 import { LowSync, MemorySync } from "lowdb";
 import { JSONFileSync } from "lowdb/node";
@@ -17,6 +18,12 @@ export interface User {
   username: string;
   password: string;
   role: "ADMIN" | "SUPER_ADMIN";
+}
+
+export interface Database {
+  rooms: Room[];
+  messages: Message[];
+  users: User[];
 }
 
 const originalDB = {
