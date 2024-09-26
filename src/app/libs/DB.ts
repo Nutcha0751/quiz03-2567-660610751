@@ -25,6 +25,11 @@ export interface Database {
   messages: Message[];
   users: User[];
 }
+ export interface payload{
+  username: string;
+  studentId: string;
+  role: string;
+ }
 
 const originalDB = {
   rooms: [

@@ -4,11 +4,15 @@ import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
-  const DB = readDB();
+  readDB();
+  let total: number = 0;
+  for (const room in (<any>DB).rooms) {
+    total++;
+  }
   return NextResponse.json({
     ok: true,
-    //rooms: DB.rooms,
-    //totalRooms: DB.rooms.length
+    rooms: (<any>DB).rooms,
+    totalRooms: total
   });
 };
 
@@ -24,24 +28,29 @@ export const POST = async (request: NextRequest) => {
     );
   }
 
+  const body = await request.json();
   readDB();
 
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room ${"replace this with room name"} already exists`,
-  //   },
-  //   { status: 400 }
-  // );
+  /*if(room){
+    return NextResponse.json(
+      {
+        ok: false,
+        message: `Room ${"replace this with room name"} already exists`,
+      },
+      { status: 400 }
+    );
+  }*/
 
   const roomId = nanoid();
 
   //call writeDB after modifying Database
+  (<any>DB).room.push()
   writeDB();
 
+  //DB.user.push(body);
   return NextResponse.json({
     ok: true,
-    //roomId,
+    roomId,
     message: `Room ${"replace this with room name"} has been created`,
   });
 };
