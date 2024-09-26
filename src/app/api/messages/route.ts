@@ -2,18 +2,30 @@ import { DB, readDB, writeDB } from "@lib/DB";
 import { checkToken } from "@lib/checkToken";
 import { nanoid } from "nanoid";
 import { NextRequest, NextResponse } from "next/server";
+import { Database, payload } from "@lib/DB";
 
 export const GET = async (request: NextRequest) => {
+  const roomId = request.nextUrl.searchParams.get("roomId");
   readDB();
+  const rooms = (<Database>DB).rooms;
+  const room = rooms.find((r) => r.roomId === roomId);
 
-  // return NextResponse.json(
-  //   {
-  //     ok: false,
-  //     message: `Room is not found`,
-  //   },
-  //   { status: 404 }
-  // );
+  if(room){
+    return NextResponse.json(
+    {
+      ok: false,
+      message: `Room is not found`,
+    },
+      { status: 404 }
+    );
+  }
+  const messages = (<Database>DB).messages.filter((m) => m.roomId === roomId);
+  return NextResponse.json({
+    ok: true,
+    messages,
+  });
 };
+
 
 export const POST = async (request: NextRequest) => {
   readDB();
